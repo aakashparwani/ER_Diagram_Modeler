@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Force Clear Cache</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Cache Refresher</h1>
+        <p>This will clear LocalStorage and force a hard reload.</p>
+        <button onclick="clearAndReload()">Clear & Reload App</button>
+    </div>
+    <script>
+        function clearAndReload() {
+            localStorage.clear();
+            // Append unique timestamp to bypass all possible caches
+            window.location.href = 'index.html?t=' + Date.now();
+        }
+    </script>
+</body>
+
+</html>
