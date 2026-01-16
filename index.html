@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="ER Diagram Modeler - Upload and edit entity-relationship diagrams with AI-powered image parsing">
+    <meta name="keywords" content="ER diagram, entity relationship, database modeling, diagram editor">
+    <title>ER Diagram Modeler - AI-Powered Database Design</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css?v=stable_2026_01">
+</head>
+
+<body>
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <svg class="title-icon" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect x="4" y="4" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2" />
+                        <rect x="18" y="4" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2" />
+                        <rect x="11" y="18" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2" />
+                        <path d="M9 14L16 18M23 14L16 18" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    ER Diagram Modeler
+                </h1>
+                <div class="header-actions">
+                    <button id="settingsBtn" class="btn btn-secondary" title="Settings">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path
+                                d="M10 12.5C11.3807 12.5 12.5 11.3807 12.5 10C12.5 8.61929 11.3807 7.5 10 7.5C8.61929 7.5 7.5 8.61929 7.5 10C7.5 11.3807 8.61929 12.5 10 12.5Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                            <path
+                                d="M16.25 10C16.25 10.625 16.75 11.125 17.375 11.125C18 11.125 18.5 11.625 18.5 12.25V13.75C18.5 14.375 18 14.875 17.375 14.875C16.75 14.875 16.25 15.375 16.25 16V16.25C16.25 16.875 15.75 17.375 15.125 17.375H13.625C13 17.375 12.5 16.875 12.5 16.25C12.5 15.625 12 15.125 11.375 15.125H10.625C10 15.125 9.5 15.625 9.5 16.25C9.5 16.875 9 17.375 8.375 17.375H6.875C6.25 17.375 5.75 16.875 5.75 16.25V16C5.75 15.375 5.25 14.875 4.625 14.875C4 14.875 3.5 14.375 3.5 13.75V12.25C3.5 11.625 4 11.125 4.625 11.125C5.25 11.125 5.75 10.625 5.75 10V10C5.75 9.375 5.25 8.875 4.625 8.875C4 8.875 3.5 8.375 3.5 7.75V6.25C3.5 5.625 4 5.125 4.625 5.125C5.25 5.125 5.75 4.625 5.75 4V3.75C5.75 3.125 6.25 2.625 6.875 2.625H8.375C9 2.625 9.5 3.125 9.5 3.75C9.5 4.375 10 4.875 10.625 4.875H11.375C12 4.875 12.5 4.375 12.5 3.75C12.5 3.125 13 2.625 13.625 2.625H15.125C15.75 2.625 16.25 3.125 16.25 3.75V4C16.25 4.625 16.75 5.125 17.375 5.125C18 5.125 18.5 5.625 18.5 6.25V7.75C18.5 8.375 18 8.875 17.375 8.875C16.75 8.875 16.25 9.375 16.25 10Z"
+                                stroke="currentColor" stroke-width="1.5" />
+                        </svg>
+                        Settings
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section id="uploadSection" class="upload-section">
+                <div class="upload-card">
+                    <div class="upload-icon">
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                            <path d="M32 44V20M32 20L22 30M32 20L42 30" stroke="currentColor" stroke-width="3"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M50 44V52C50 53.1046 49.1046 54 48 54H16C14.8954 54 14 53.1046 14 52V44"
+                                stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h2 class="upload-title">Upload ER Diagram</h2>
+                    <p class="upload-description">Upload an image of your ER diagram and let AI convert it to an
+                        editable format</p>
+
+                    <div id="dropZone" class="drop-zone">
+                        <p class="drop-zone-text">Drag & drop your diagram here or click to browse</p>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                    </div>
+
+                    <div id="imagePreview" class="image-preview hidden">
+                        <img id="previewImage" src="" alt="Preview">
+                        <button id="removeImage" class="btn-remove">✕</button>
+                    </div>
+
+                    <button id="parseBtn" class="btn btn-primary hidden">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 2L13 8L19 9L14.5 13L16 19L10 16L4 19L5.5 13L1 9L7 8L10 2Z"
+                                stroke="currentColor" stroke-width="1.5" fill="none" />
+                        </svg>
+                        Parse with AI
+                    </button>
+
+                    <div id="parsingStatus" class="parsing-status hidden">
+                        <div class="spinner"></div>
+                        <p>Analyzing diagram...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Editor Section -->
+            <section id="editorSection" class="editor-section hidden">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <div class="toolbar-group">
+                        <button id="addEntityBtn" class="btn btn-secondary" title="Add Entity">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <path d="M10 7V13M7 10H13" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                            Add Entity
+                        </button>
+                        <button id="addRelationBtn" class="btn btn-secondary" title="Add Relationship">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M4 10H16M16 10L12 6M16 10L12 14" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Add Relation
+                        </button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button id="zoomIn" class="btn btn-icon" title="Zoom In">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M9 6V12M6 9H12" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                                <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                        <button id="zoomOut" class="btn btn-icon" title="Zoom Out">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5" />
+                                <path d="M6 9H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                        <button id="resetZoom" class="btn btn-icon" title="Reset View">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path
+                                    d="M4 10C4 6.68629 6.68629 4 10 4C13.3137 4 16 6.68629 16 10C16 13.3137 13.3137 16 10 16"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M4 13V16H7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <button id="exportPng" class="btn btn-secondary" title="Export as PNG">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path
+                                    d="M17 13V16C17 16.5304 16.7893 17.0391 16.4142 17.4142C16.0391 17.7893 15.5304 18 15 18H5C4.46957 18 3.96086 17.7893 3.58579 17.4142C3.21071 17.0391 3 16.5304 3 16V13"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M10 13V3M10 13L6 9M10 13L14 9" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            PNG
+                        </button>
+                        <button id="exportJson" class="btn btn-secondary" title="Export as JSON">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path
+                                    d="M17 13V16C17 16.5304 16.7893 17.0391 16.4142 17.4142C16.0391 17.7893 15.5304 18 15 18H5C4.46957 18 3.96086 17.7893 3.58579 17.4142C3.21071 17.0391 3 16.5304 3 16V13"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M10 13V3M10 13L6 9M10 13L14 9" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            JSON
+                        </button>
+                        <button id="exportSql" class="btn btn-secondary" title="Export as SQL">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path
+                                    d="M17 13V16C17 16.5304 16.7893 17.0391 16.4142 17.4142C16.0391 17.7893 15.5304 18 15 18H5C4.46957 18 3.96086 17.7893 3.58579 17.4142C3.21071 17.0391 3 16.5304 3 16V13"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M10 13V3M10 13L6 9M10 13L14 9" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            SQL
+                        </button>
+                        <button id="newDiagramBtn" class="btn btn-secondary" title="New Diagram">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                            </svg>
+                            New
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Canvas Area -->
+                <div class="canvas-container">
+                    <canvas id="diagramCanvas"></canvas>
+                </div>
+
+                <!-- Properties Panel -->
+                <aside id="propertiesPanel" class="properties-panel hidden">
+                    <div class="panel-header">
+                        <h3 class="panel-title">Properties</h3>
+                        <button id="closePanelBtn" class="btn-close">✕</button>
+                    </div>
+                    <div id="panelContent" class="panel-content">
+                        <!-- Dynamic content will be inserted here -->
+                    </div>
+                </aside>
+            </section>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Settings</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="apiKeyInput">Claude API Key</label>
+                    <input type="password" id="apiKeyInput" placeholder="sk-ant-..." class="input-field">
+                    <p class="form-help">Your API key is stored locally in your browser and is only sent to Anthropic's
+                        servers.</p>
+                </div>
+                <div class="form-group">
+                    <label for="modelSelect">Model</label>
+                    <select id="modelSelect" class="input-field">
+                        <option value="claude-sonnet-4-20250514">Claude Sonnet 4 (Recommended)</option>
+                        <option value="claude-3-5-sonnet-20240620">Claude 3.5 Sonnet</option>
+                        <option value="claude-3-opus-20240229">Claude 3 Opus</option>
+                        <option value="claude-3-sonnet-20240229">Claude 3 Sonnet</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveSettings" class="btn btn-primary">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entity Modal -->
+    <div id="entityModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Entity Details</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="entityName">Entity Name</label>
+                    <input type="text" id="entityName" placeholder="e.g., User, Product" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="tableType">Table Type</label>
+                    <select id="tableType" class="input-field">
+                        <option value="Unknown">Unknown</option>
+                        <option value="Fact">Fact Table</option>
+                        <option value="Dimension">Dimension Table</option>
+                        <option value="Staging">Staging Table</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <p class="form-help">AI Suggestion: <span id="suggestedTypeBadge" class="type-badge">Unknown</span>
+                    </p>
+                </div>
+                <div class="form-group">
+                    <label>Attributes</label>
+                    <div id="attributesList" class="attributes-list">
+                        <!-- Attributes will be added here -->
+                    </div>
+                    <button id="addAttributeBtn" class="btn btn-secondary btn-sm">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+                        Add Attribute
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteEntity" class="btn btn-danger">Delete</button>
+                <button id="saveEntity" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Relationship Modal -->
+    <div id="relationModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Relationship Details</h2>
+                <button class="modal-close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="fromEntity">From Entity</label>
+                    <select id="fromEntity" class="input-field">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="toEntity">To Entity</label>
+                    <select id="toEntity" class="input-field">
+                        <!-- Options populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="relationType">Relationship Type</label>
+                    <select id="relationType" class="input-field">
+                        <option value="one-to-one">One to One (1:1)</option>
+                        <option value="one-to-many">One to Many (1:N)</option>
+                        <option value="many-to-one">Many to One (N:1)</option>
+                        <option value="many-to-many">Many to Many (N:M)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="relationName">Relationship Name (Optional)</label>
+                    <input type="text" id="relationName" placeholder="e.g., owns, belongs to" class="input-field">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteRelation" class="btn btn-danger">Delete</button>
+                <button id="saveRelation" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="main.js?v=stable_2026_01"></script>
+</body>
+
+</html>

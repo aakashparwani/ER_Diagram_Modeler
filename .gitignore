@@ -1,0 +1,36 @@
+# API Keys and Secrets
+.env
+*.local.js
+config.json
+secret.js
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+
+# OS Specific
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project Specific
+ER_DiagramModeller_Presentation_UPDATED.pdf
+ER_DiagramModeller_Presentation_UPDATED.pptx
+Project_Structure.txt
